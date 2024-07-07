@@ -7,6 +7,7 @@ import ru.clevertec.chek.reader.Reader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class ProductReader implements Reader<Product> {
                 if (parts.length == 5) {
                     Long id = Long.parseLong(parts[0]);
                     String description = parts[1];
-                    Double price = Double.parseDouble(parts[2].replace(",", "."));
+                    double doublePrice = Double.parseDouble(parts[2].replace(",", "."));
+                    BigDecimal price = BigDecimal.valueOf(doublePrice);
                     Integer quantityInStock = Integer.parseInt(parts[3]);
                     Boolean isWholesaleProduct = parts[4].equals("+");
                     Product product = new Product(id, description, price, quantityInStock, isWholesaleProduct);

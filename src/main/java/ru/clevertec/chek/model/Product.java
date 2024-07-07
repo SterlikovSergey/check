@@ -1,16 +1,18 @@
 package ru.clevertec.chek.model;
 
+import java.math.BigDecimal;
+
 public class Product {
     private Long id;
     private String description;
-    private Double price;
+    private BigDecimal price;
     private Integer quantityInStock;
     private Boolean isWholesaleProduct;
 
     public Product() {
     }
 
-    public Product(Long id, String description, Double price, Integer quantityInStock, Boolean isWholesaleProduct) {
+    public Product(Long id, String description, BigDecimal price, Integer quantityInStock, Boolean isWholesaleProduct) {
         this.id = id;
         this.description = description;
         this.price = price;
@@ -26,7 +28,7 @@ public class Product {
         return description;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
