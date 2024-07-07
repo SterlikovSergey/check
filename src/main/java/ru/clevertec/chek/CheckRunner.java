@@ -28,6 +28,5 @@ public class CheckRunner {
         receiptItems.forEach(System.out::println);
 
         System.out.println(check);
-
     }
 }

@@ -51,32 +51,4 @@ public class ProductService {
         }
         return receiptItems;
     }
-
-    /*public Map<Product, Double> createProductCheck(Map<Long, Double> idsQuantitysMap) throws IOException {
-        Map<Product, Double> productCheck = new HashMap<>();
-        List<Product> products = getAllProducts();
-
-        for (Map.Entry<Long, Double> entry : idsQuantitysMap.entrySet()) {
-            Long id = entry.getKey();
-            Double quantity = entry.getValue();
-
-            try {
-                Product product = products.stream()
-                        .filter(p -> p.getId().equals(id))
-                        .findFirst()
-                        .orElseThrow(() -> new Error("ERROR", "BAD REQUEST: Product with ID " + id + " not found"));
-
-                if (product.getQuantityInStock() < quantity) {
-                    throw new Error("ERROR", "BAD REQUEST: Not enough stock for product ID " + id);
-                }
-
-                productCheck.put(product, quantity);
-            } catch (Error e) {
-                Writer<Error> writer = new ErrorWriter();
-                writer.write(e);
-                System.out.println(e.getMessage() + " " + e.getDescription());
-            }
-        }
-        return productCheck;
-    }*/
 }

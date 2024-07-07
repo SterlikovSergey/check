@@ -44,7 +44,7 @@ public class CommandLineArguments {
         } catch (Error e) {
             Writer<Error> writer = new ErrorWriter();
             writer.write(new Error(e.getMessage(),e.getDescription()));
-            throw new IllegalArgumentException(); // Повторно выбрасываем исключение для прерывания выполнения программы
+            throw new IllegalArgumentException();
         }
     }
 
@@ -59,5 +59,4 @@ public class CommandLineArguments {
     public Long getBalanceDebitCard() {
         return balanceDebitCard;
     }
-
 }

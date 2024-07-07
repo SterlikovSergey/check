@@ -8,15 +8,13 @@ import ru.clevertec.chek.model.ReceiptItem;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CashReceiptFactory {
     public static Check createCheck(List<ReceiptItem> receiptItems, DiscountCard discountCard, Long balanceDebitCard) {
-// Расчет скидок и обновление списка товаров
+
         List<ReceiptItem> updatedReceiptItems = PriceCalculator.calculateTotalDiscount(receiptItems, discountCard);
 
-        // Расчет общей стоимости и скидок
         BigDecimal totalPrice = updatedReceiptItems.stream()
                 .map(ReceiptItem::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
