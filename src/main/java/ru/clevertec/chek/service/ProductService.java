@@ -1,6 +1,6 @@
 package ru.clevertec.chek.service;
 
-import ru.clevertec.chek.exeption.Error;
+import ru.clevertec.chek.exeption.CustomError;
 import ru.clevertec.chek.model.Product;
 import ru.clevertec.chek.model.ReceiptItem;
 import ru.clevertec.chek.reader.Reader;
@@ -14,9 +14,12 @@ import java.util.Map;
 
 public class ProductService {
     private final Reader<Product> productReader;
+    private final Writer<CustomError> errorWriter;
+
 
     public ProductService(Reader<Product> productReader) {
         this.productReader = productReader;
+        this.errorWriter = new ErrorWriter();
     }
 
     public List<Product> getAllProducts() throws IOException {
@@ -35,18 +38,17 @@ public class ProductService {
                 Product product = products.stream()
                         .filter(p -> p.getId().equals(id))
                         .findFirst()
-                        .orElseThrow(() -> new Error("ERROR", "BAD REQUEST: Product with ID " + id + " not found"));
+                        .orElseThrow(() -> new CustomError("ERROR", "BAD REQUEST: Product with ID " + id + " not found"));
 
                 if (product.getQuantityInStock() < quantity) {
-                    throw new Error("ERROR", "BAD REQUEST: Not enough stock for product ID " + id);
+                    throw new CustomError("ERROR", "BAD REQUEST: Not enough stock for product ID " + id);
                 }
 
                 ReceiptItem receiptItem = new ReceiptItem(product, quantity, product.getPrice());
                 receiptItems.add(receiptItem);
-            } catch (Error e) {
-                Writer<Error> writer = new ErrorWriter();
-                writer.write(e);
-                System.out.println(e.getMessage() + " " + e.getDescription());
+            } catch (CustomError e) {
+                errorWriter.write(e);
+                System.exit(1);
             }
         }
         return receiptItems;

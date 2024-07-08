@@ -9,8 +9,11 @@ import ru.clevertec.chek.reader.impl.ProductReader;
 import ru.clevertec.chek.service.DiscountService;
 import ru.clevertec.chek.service.ProductService;
 import ru.clevertec.chek.util.CommandLineArguments;
+import ru.clevertec.chek.writer.Writer;
+import ru.clevertec.chek.writer.impl.CheckWriter;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CheckRunner {
@@ -21,12 +24,10 @@ public class CheckRunner {
 
         List<ReceiptItem> receiptItems = productService.createListProductCheck(cmdArgs.getIdsQuantitysMap());
         DiscountCard discountCard = discountService.getDiscountCardByNumber(cmdArgs.getDiscountCardNumber());
-        Long balanceDebitCard = cmdArgs.getBalanceDebitCard();
+        BigDecimal balanceDebitCard = cmdArgs.getBalanceDebitCard();
 
-        Check check = CashReceiptFactory.createCheck(receiptItems,discountCard,balanceDebitCard);
-
-        receiptItems.forEach(System.out::println);
-
-        System.out.println(check);
+        Check check = CashReceiptFactory.createCheck(receiptItems, discountCard, balanceDebitCard);
+        Writer<Check> checkWriter = new CheckWriter();
+        checkWriter.write(check);
     }
 }

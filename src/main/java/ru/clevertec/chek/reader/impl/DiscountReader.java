@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountReader implements Reader<DiscountCard> {
+    private static final String FILE_PATH = "./src/main/resources/discountCards.csv";
+
     @Override
     public List<DiscountCard> readFromFile() throws IOException {
         List<DiscountCard> discountCards = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/discountCards.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             boolean firstLine = true; // Добавим флаг для первой строки
             while ((line = reader.readLine()) != null) {

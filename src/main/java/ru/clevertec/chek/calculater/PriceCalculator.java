@@ -4,6 +4,7 @@ import ru.clevertec.chek.model.DiscountCard;
 import ru.clevertec.chek.model.ReceiptItem;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class PriceCalculator {
@@ -24,7 +25,7 @@ public class PriceCalculator {
             }
             item.setDiscount(discount);
 
-            BigDecimal discountedTotal = total.subtract(discount);
+            BigDecimal discountedTotal = total.subtract(discount).setScale(2, RoundingMode.HALF_EVEN);
             item.setTotal(discountedTotal);
         }
         return receiptItems;

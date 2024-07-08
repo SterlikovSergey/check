@@ -18,6 +18,38 @@ public class Check {
     private Check() {
     }
 
+    public LocalDate getCheckDate() {
+        return checkDate;
+    }
+
+    public LocalTime getCheckTime() {
+        return checkTime;
+    }
+
+    public List<ReceiptItem> getReceiptItems() {
+        return receiptItems;
+    }
+
+    public Integer getDiscountCard() {
+        return discountCard;
+    }
+
+    public Integer getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public BigDecimal getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public BigDecimal getTotalWithDiscount() {
+        return totalWithDiscount;
+    }
+
     public static class CheckBuilder {
         private Check check;
 

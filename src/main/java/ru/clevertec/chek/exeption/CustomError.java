@@ -1,10 +1,10 @@
 package ru.clevertec.chek.exeption;
 
-public class Error extends Exception{
+public class CustomError extends Exception {
     private String message;
     private String description;
 
-    public Error(String message, String description) {
+    public CustomError(String message, String description) {
         super(message);
         this.message = message;
         this.description = description;
