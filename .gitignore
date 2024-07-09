@@ -3,6 +3,43 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Файлы среды разработки IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Каталоги Gradle
+.gradle/
+build/
+
+# Временные файлы
+*.tmp
+*.log
+*.bak
+
+# Файлы операционной системы
+.DS_Store
+Thumbs.db
+
+# Каталоги и файлы, специфичные для вашего проекта
+# Например, если у вас есть каталог с генерируемыми отчетами:
+reports/
+
+# Файлы сборки и артефакты
+*.jar
+*.war
+*.ear
+*.class
+
+# Файлы секретов (не добавляйте их в репозиторий!)
+*.keystore
+*.jks
+
+# Файлы баз данных, если они хранятся локально
+*.db
+*.sql
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
