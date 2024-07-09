@@ -11,27 +11,28 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class CashReceiptFactory {
-    public static Check createCheck(List<ReceiptItem> receiptItems, DiscountCard discountCard, BigDecimal balanceDebitCard) {
+    public static Check createCheck(List<ReceiptItem> receiptItems, DiscountCard discountCard) {
+        List<ReceiptItem> updatedReceiptItems = PriceCalculator.calculateTotalDiscount(receiptItems, discountCard);
 
-            List<ReceiptItem> updatedReceiptItems = PriceCalculator.calculateTotalDiscount(receiptItems, discountCard);
+        BigDecimal totalPrice = updatedReceiptItems.stream()
+                .map(ReceiptItem::getTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            BigDecimal totalPrice = updatedReceiptItems.stream()
-                    .map(ReceiptItem::getTotal)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-            BigDecimal totalDiscount = updatedReceiptItems.stream()
-                    .map(ReceiptItem::getDiscount)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-            BigDecimal totalWithDiscount = totalPrice.subtract(totalDiscount);
+        BigDecimal totalDiscount = updatedReceiptItems.stream()
+                .map(ReceiptItem::getDiscount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            return new Check.CheckBuilder()
-                    .setCheckDate(LocalDate.now())
-                    .setCheckTime(LocalTime.now())
-                    .setReceiptItems(updatedReceiptItems)
-                    .setDiscountCard(discountCard != null ? discountCard.getNumber() : null)
-                    .setDiscountPercentage(discountCard != null ? discountCard.getDiscountAmount() : null)
-                    .setTotalPrice(totalPrice)
-                    .setTotalDiscount(totalDiscount)
-                    .setTotalWithDiscount(totalWithDiscount)
-                    .build();
+        BigDecimal totalWithDiscount = totalPrice.subtract(totalDiscount);
+
+        return new Check.CheckBuilder()
+                .setCheckDate(LocalDate.now())
+                .setCheckTime(LocalTime.now())
+                .setReceiptItems(updatedReceiptItems)
+                .setDiscountCard(discountCard != null ? discountCard.getNumber() : null)
+                .setDiscountPercentage(discountCard != null ? discountCard.getDiscountAmount() : null)
+                .setTotalPrice(totalPrice)
+                .setTotalDiscount(totalDiscount)
+                .setTotalWithDiscount(totalWithDiscount)
+                .build();
     }
 }

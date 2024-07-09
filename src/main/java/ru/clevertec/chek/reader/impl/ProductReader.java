@@ -11,12 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductReader implements Reader<Product> {
-    private static final String FILE_PATH = "./src/main/resources/products.csv";
+    private final String filePath;
+
+    public ProductReader(String filePath) {
+        this.filePath = filePath;
+    }
 
     @Override
     public List<Product> readFromFile() throws IOException {
         List<Product> products = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean firstLine = true; // Добавим флаг для первой строки
             while ((line = reader.readLine()) != null) {

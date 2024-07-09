@@ -1,28 +1,21 @@
 package ru.clevertec.chek.exeption;
 
 public class CustomError extends Exception {
-    private String message;
-    private String description;
+    private final String code;
+    private final String description;
 
-    public CustomError(String message, String description) {
-        super(message);
-        this.message = message;
+    public CustomError(String code, String description) {
+        super(description);
+        this.code = code;
         this.description = description;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    @Override
     public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }
