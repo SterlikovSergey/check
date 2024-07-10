@@ -1,0 +1,44 @@
+package ru.clevertec.check.service;
+
+import ru.clevertec.check.dao.ProductDao;
+import ru.clevertec.check.exeption.CustomError;
+import ru.clevertec.check.exeption.CustomErrorFactory;
+import ru.clevertec.check.model.Product;
+import ru.clevertec.check.model.ReceiptItem;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class ProductService {
+
+    private final ProductDao productDao;
+
+    public ProductService(ProductDao productDao) {
+        this.productDao = productDao;
+    }
+
+    public List<Product> getAllProducts() {
+        return productDao.getProducts();
+    }
+
+    public List<ReceiptItem> createListProductCheck(Map<Long, Double> idsQuantitysMap) throws CustomError, IOException {
+        List<ReceiptItem> receiptItems = new ArrayList<>();
+        List<Product> products = getAllProducts();
+        for (Map.Entry<Long, Double> entry : idsQuantitysMap.entrySet()) {
+            Long id = entry.getKey();
+            Double quantity = entry.getValue();
+            Product product = products.stream()
+                    .filter(p -> p.getId().equals(id))
+                    .findFirst()
+                    .orElseThrow(() -> new CustomError("ERROR", "BAD REQUEST: Product with ID " + id + " not found"));
+            if (product.getQuantityInStock() < quantity) {
+                throw CustomErrorFactory.create("ERROR", "BAD REQUEST: Not enough stock for product ID \" + id");
+            }
+            ReceiptItem receiptItem = new ReceiptItem(product, quantity, product.getPrice());
+            receiptItems.add(receiptItem);
+        }
+        return receiptItems;
+    }
+}
