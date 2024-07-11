@@ -1,26 +1,26 @@
 package ru.clevertec.check.service;
 
-import ru.clevertec.check.dao.ProductDao;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.clevertec.check.exeption.CustomError;
 import ru.clevertec.check.exeption.CustomErrorFactory;
 import ru.clevertec.check.model.Product;
 import ru.clevertec.check.model.ReceiptItem;
+import ru.clevertec.check.repository.ProductRepo;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
+@Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductDao productDao;
+    private final ProductRepo productRepo;
 
-    public ProductService(ProductDao productDao) {
-        this.productDao = productDao;
-    }
+
+
 
     public List<Product> getAllProducts() {
-        return productDao.getProducts();
+        return productRepo.getProducts();
     }
 
     public List<ReceiptItem> createListProductCheck(Map<Long, Double> idsQuantitysMap) throws CustomError, IOException {
@@ -41,4 +41,31 @@ public class ProductService {
         }
         return receiptItems;
     }
+
+    public Product add(Product product) {
+        return product.save(product);
+    }
+
+    public Product get(Long id) {
+        return productRepo.findById(id).orElseThrow();
+    }
+
+    public List<Product> getAllBy(List<Long> ids) {
+        return productRepo.findAllById(ids);
+    }
+
+    public Map<Product, Integer> getCounts(List<Long> itemsIds) {
+        List<Product> products = productRepo.findAllById(itemsIds);
+        Map<Product, Integer> productIntegerMap = new HashMap<>();
+        for (Product product : products) {
+            int count = Collections.frequency(itemsIds, product.getId());
+            productIntegerMap.put(product, count);
+        }
+        return productIntegerMap;
+    }
+
+    public List<Product> getAll() {
+        return productRepo.findAll();
+    }
+
 }

@@ -1,37 +1,20 @@
 package ru.clevertec.check.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+
+@Entity
+@Data
 public class DiscountCard {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private Integer number;
     private Integer discountAmount;
 
-    public DiscountCard() {
-    }
-
-    public DiscountCard(Long id, Integer number, Integer discountAmount) {
-        this.id = id;
-        this.number = number;
-        this.discountAmount = discountAmount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public Integer getDiscountAmount() {
-        return discountAmount;
-    }
-
-    @Override
-    public String toString() {
-        return "DiscountCard{" +
-                "id=" + id +
-                ", number=" + number +
-                ", discountAmount=" + discountAmount +
-                '}';
-    }
 }

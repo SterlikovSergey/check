@@ -1,5 +1,6 @@
 package ru.clevertec.check.factory;
 
+import org.springframework.stereotype.Service;
 import ru.clevertec.check.calculater.PriceCalculator;
 import ru.clevertec.check.model.Check;
 import ru.clevertec.check.model.DiscountCard;
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
+@Service
 public class CashReceiptFactory {
     public static Check createCheck(List<ReceiptItem> receiptItems, DiscountCard discountCard) {
         List<ReceiptItem> updatedReceiptItems = PriceCalculator.calculateTotalDiscount(receiptItems, discountCard);
@@ -24,15 +25,16 @@ public class CashReceiptFactory {
 
         BigDecimal totalWithDiscount = totalPrice.subtract(totalDiscount);
 
-        return new Check.CheckBuilder()
-                .setCheckDate(LocalDate.now())
-                .setCheckTime(LocalTime.now())
-                .setReceiptItems(updatedReceiptItems)
-                .setDiscountCard(discountCard != null ? discountCard.getNumber() : null)
-                .setDiscountPercentage(discountCard != null ? discountCard.getDiscountAmount() : null)
-                .setTotalPrice(totalPrice)
-                .setTotalDiscount(totalDiscount)
-                .setTotalWithDiscount(totalWithDiscount)
+
+        return  Check.builder()
+                .checkDate(LocalDate.now())
+                .checkTime(LocalTime.now())
+                .receiptItems(updatedReceiptItems)
+                .discountCard(discountCard != null ? discountCard.getNumber() : null)
+                .discountPercentage(discountCard != null ? discountCard.getDiscountAmount() : null)
+                .totalPrice(totalPrice)
+                .totalDiscount(totalDiscount)
+                .totalWithDiscount(totalWithDiscount)
                 .build();
     }
 }

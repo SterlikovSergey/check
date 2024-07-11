@@ -1,12 +1,11 @@
 package ru.clevertec.check;
 
-import ru.clevertec.check.dao.impl.DiscountDaoImpl;
+import ru.clevertec.check.repository.impl.DiscountDaoImpl;
 import ru.clevertec.check.model.DiscountCard;
 import ru.clevertec.check.service.DiscountService;
 import ru.clevertec.check.service.ProductService;
-import ru.clevertec.check.dao.DiscountDao;
-import ru.clevertec.check.dao.ProductDao;
-import ru.clevertec.check.dao.impl.ProductDaoImpl;
+import ru.clevertec.check.repository.Discount;
+import ru.clevertec.check.repository.impl.ProductDaoImpl;
 import ru.clevertec.check.database.DatabaseConnection;
 import ru.clevertec.check.database.DatabaseInitializer;
 import ru.clevertec.check.exeption.CustomError;
@@ -36,11 +35,11 @@ public class CheckRunner {
             DatabaseInitializer.initializeDatabase(databaseConnection.getConnection());
             SqlQueryLoader.loadProductsFromFileAndInsertToDb(arguments.getPathToFile(), databaseConnection.getConnection());
             SqlQueryLoader.loadDiscountFromFileAndInsertToDb(databaseConnection.getConnection());
-            DiscountDao discountDao = new DiscountDaoImpl(databaseConnection);
-            DiscountService discountService = new DiscountService(discountDao);
+            Discount discount = new DiscountDaoImpl(databaseConnection);
+            DiscountService discountService = new DiscountService(discount);
             DiscountCard discountCard = discountService.getDiscountCard(arguments.getDiscountCardNumber());
-            ProductDao productDao = new ProductDaoImpl(databaseConnection);
-            ProductService productService = new ProductService(productDao);
+            Product product = new ProductDaoImpl(databaseConnection);
+            ProductService productService = new ProductService(product);
             List<ReceiptItem> receiptItems = productService.createListProductCheck(arguments.getIdsQuantitysMap());
             BigDecimal balanceDebitCard = arguments.getBalanceDebitCard();
             if (balanceDebitCard != null) {
