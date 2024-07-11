@@ -2,10 +2,10 @@ package ru.clevertec.check;
 
 import org.junit.jupiter.api.Test;
 import ru.clevertec.check.factory.CashReceiptFactory;
-import ru.clevertec.chek.model.Check;
-import ru.clevertec.chek.model.DiscountCard;
-import ru.clevertec.chek.model.Product;
-import ru.clevertec.chek.model.ReceiptItem;
+import ru.clevertec.check.model.Check;
+import ru.clevertec.check.model.DiscountCard;
+import ru.clevertec.check.model.Product;
+import ru.clevertec.check.model.ReceiptItem;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
