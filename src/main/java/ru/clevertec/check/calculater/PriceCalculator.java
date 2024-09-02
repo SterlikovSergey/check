@@ -18,9 +18,9 @@ public class PriceCalculator {
             item.setTotal(total);
 
             BigDecimal discount = BigDecimal.ZERO;
-            if (item.getProduct().getWholesaleProduct() && item.getQuantity() >= 5) {
+            if (item.getProduct().getIsWholesaleProduct() && item.getQuantity() >= 5) {
                 discount = total.multiply(BigDecimal.valueOf(0.10));
-            } else if (!item.getProduct().getWholesaleProduct() && discountCard != null) {
+            } else if (!item.getProduct().getIsWholesaleProduct() && discountCard != null) {
                 discount = total.multiply(BigDecimal.valueOf(discountCard.getDiscountAmount()).divide(BigDecimal.valueOf(100)));
             }
             item.setDiscount(discount);

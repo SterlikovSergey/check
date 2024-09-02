@@ -10,5 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DiscountCardDto {
-    private Double discountRate;
+    private Integer cardNumber;
+    private Integer discountRate;
 }

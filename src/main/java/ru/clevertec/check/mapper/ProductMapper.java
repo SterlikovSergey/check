@@ -1,8 +1,10 @@
 package ru.clevertec.check.mapper;
 
-import by.st.cash_receipt.dto.ProductDto;
-import by.st.cash_receipt.model.Product;
 import org.springframework.stereotype.Component;
+import ru.clevertec.check.dto.ProductDto;
+import ru.clevertec.check.model.Product;
+
+import java.text.DecimalFormat;
 
 @Component
 public class ProductMapper {
@@ -10,7 +12,7 @@ public class ProductMapper {
         return Product.builder()
                 .description(dto.getDescription())
                 .price(dto.getPrice())
-                .isPromotional(dto.getIsPromotional())
+                .isWholesaleProduct(dto.getIsPromotional())
                 .build();
     }
 }

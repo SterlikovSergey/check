@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.clevertec.check.dto.DiscountCardDto;
+import ru.clevertec.check.mapper.DiscountCardMapper;
+import ru.clevertec.check.service.DiscountService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/discount")
 public class DiscountController {
-    private final DiscountCardService discountCardService;
+    private final DiscountService discountCardService;
     private final DiscountCardMapper discountCardMapper;
     @PostMapping
     public ResponseEntity<Object> addDiscount(@RequestBody DiscountCardDto dto){

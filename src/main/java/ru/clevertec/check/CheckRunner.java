@@ -31,11 +31,11 @@ public class CheckRunner {
         ErrorManager errorManager = new ErrorManager();
         try {
             CommandLineArguments arguments = parser.parse(args);
-            DatabaseConnection databaseConnection = new DatabaseConnection(arguments.getDatasourceUrl(), arguments.getDatasourceUsername(), arguments.getDatasourcePassword());
-            DatabaseInitializer.initializeDatabase(databaseConnection.getConnection());
-            SqlQueryLoader.loadProductsFromFileAndInsertToDb(arguments.getPathToFile(), databaseConnection.getConnection());
+           /* DatabaseConnection databaseConnection = new DatabaseConnection(arguments.getDatasourceUrl(), arguments.getDatasourceUsername(), arguments.getDatasourcePassword());
+            DatabaseInitializer.initializeDatabase(databaseConnection.getConnection());*/
+            /*SqlQueryLoader.loadProductsFromFileAndInsertToDb(arguments.getPathToFile(), databaseConnection.getConnection());
             SqlQueryLoader.loadDiscountFromFileAndInsertToDb(databaseConnection.getConnection());
-            Discount discount = new DiscountDaoImpl(databaseConnection);
+            Discount discount = new DiscountDaoImpl(databaseConnection);*/
             DiscountService discountService = new DiscountService(discount);
             DiscountCard discountCard = discountService.getDiscountCard(arguments.getDiscountCardNumber());
             Product product = new ProductDaoImpl(databaseConnection);

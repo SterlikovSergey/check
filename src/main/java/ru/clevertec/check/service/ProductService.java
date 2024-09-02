@@ -29,21 +29,22 @@ public class ProductService {
         for (Map.Entry<Long, Double> entry : idsQuantitysMap.entrySet()) {
             Long id = entry.getKey();
             Double quantity = entry.getValue();
-            Product product = products.stream()
+            /*Product product = products.stream()
                     .filter(p -> p.getId().equals(id))
                     .findFirst()
-                    .orElseThrow(() -> new CustomError("ERROR", "BAD REQUEST: Product with ID " + id + " not found"));
+                    .orElseThrow(() -> new CustomError("ERROR", "BAD REQUEST: Product with ID " + id + " not found"));*/
+            Product product = get(id);
             if (product.getQuantityInStock() < quantity) {
                 throw CustomErrorFactory.create("ERROR", "BAD REQUEST: Not enough stock for product ID \" + id");
             }
-            ReceiptItem receiptItem = new ReceiptItem(product, quantity, product.getPrice());
+            ReceiptItem receiptItem = new ReceiptItem(product, quantity,product.getPrice());
             receiptItems.add(receiptItem);
         }
         return receiptItems;
     }
 
     public Product add(Product product) {
-        return product.save(product);
+        return productRepo.save(product);
     }
 
     public Product get(Long id) {

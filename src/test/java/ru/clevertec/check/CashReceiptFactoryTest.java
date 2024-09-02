@@ -18,10 +18,12 @@ public class CashReceiptFactoryTest {
     @Test
     public void test_create_check_with_valid_receipt_items_and_discount_card() {
         // Arrange
-        Product product1 = new Product(1L, "Product 1", BigDecimal.valueOf(10.00),10, false);
-        Product product2 = new Product(2L, "Product 2", BigDecimal.valueOf(20.00),10, true);
-        ReceiptItem item1 = new ReceiptItem(product1, 2.0, BigDecimal.valueOf(10.00));
-        ReceiptItem item2 = new ReceiptItem(product2, 5.0, BigDecimal.valueOf(20.00));
+        Product product1 = new Product(1L, "Product 1", BigDecimal.valueOf(100),10, false);
+        Product product2 = new Product(2L, "Product 2", BigDecimal.valueOf(200),20, true);
+
+        ReceiptItem item1 = new ReceiptItem(1L, product1, 2.0, BigDecimal.valueOf(100), BigDecimal.valueOf(200), BigDecimal.ZERO);
+        ReceiptItem item2 = new ReceiptItem(2L, product2, 5.0, BigDecimal.valueOf(200), BigDecimal.valueOf(1000), BigDecimal.ZERO);
+
         List<ReceiptItem> receiptItems = List.of(item1, item2);
         DiscountCard discountCard = new DiscountCard(1L, 12345, 10);
 
@@ -36,8 +38,8 @@ public class CashReceiptFactoryTest {
         assertEquals(receiptItems.size(), check.getReceiptItems().size());
         assertEquals(discountCard.getNumber(), check.getDiscountCard());
         assertEquals(discountCard.getDiscountAmount(), check.getDiscountPercentage());
-        assertTrue(check.getTotalPrice().compareTo(BigDecimal.ZERO) > 0);
-        assertTrue(check.getTotalDiscount().compareTo(BigDecimal.ZERO) > 0);
-        assertTrue(check.getTotalWithDiscount().compareTo(BigDecimal.ZERO) > 0);
+        assertEquals(BigDecimal.valueOf(1200).setScale(2), check.getTotalPrice().setScale(2));
+        assertEquals(BigDecimal.valueOf(100).setScale(2), check.getTotalDiscount().setScale(2));
+        assertEquals(BigDecimal.valueOf(1100).setScale(2), check.getTotalWithDiscount().setScale(2));
     }
 }

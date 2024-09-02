@@ -26,7 +26,7 @@ public class SqlQueryLoader {
                 statement.setString(2, product.getDescription());
                 statement.setBigDecimal(3, product.getPrice());
                 statement.setInt(4, product.getQuantityInStock());
-                statement.setBoolean(5, product.getWholesaleProduct());
+                statement.setBoolean(5, product.getIsWholesaleProduct());
                 statement.addBatch();
             }
             statement.executeBatch();
